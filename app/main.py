@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, flash, abort
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
@@ -10,16 +12,19 @@ from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
 
+# dotenv 로드
+load_dotenv(verbose=True)
+
 ## --- 웹 서버 정의 --
 app = Flask(__name__)                                           # flaks 객체 선언 
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'   # 애플리케이션 비밀키 설정 - 비밀 키는 세션 및 CSRF(Cross-Site Request Forgery) 보호 및 Flask 기능을 보호하는데 사용
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")              # 애플리케이션 비밀키 설정 - 비밀 키는 세션 및 CSRF(Cross-Site Request Forgery) 보호 및 Flask 기능을 보호하는데 사용
 ckeditor = CKEditor(app)                                        # 블로그 포스트 에디터인 CKEditor 객체 선언
 Bootstrap(app)                                                  # flask 웹의 Bootstrap 초기화 
 
 ## --- DB 연결 ---
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'     # SQLALCHEMY DB URL 설정 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False            # SQLALCHEMY의 트랙 수정 -> 추가적인 메모리를 필요로 하므로 False를 지정하여 끔
-db = SQLAlchemy(app)                                            # SQLALCHEMY 객체 선언
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")    # SQLALCHEMY DB URL 설정 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False                            # SQLALCHEMY의 트랙 수정 -> 추가적인 메모리를 필요로 하므로 False를 지정하여 끔
+db = SQLAlchemy(app)                                                            # SQLALCHEMY 객체 선언
 
 ## --- Flask Login 설정 ---
 login_manager = LoginManager()                                  # Flask-Login 설정 
