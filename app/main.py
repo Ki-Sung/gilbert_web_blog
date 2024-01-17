@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, flash, abort
-from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap4
 from flask_ckeditor import CKEditor
 from datetime import date
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -20,7 +20,7 @@ app = Flask(__name__)                                           # flaks 객체 �
 # app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")              # 애플리케이션 비밀키 설정 - 비밀 키는 세션 및 CSRF(Cross-Site Request Forgery) 보호 및 Flask 기능을 보호하는데 사용
 app.config['SECRET_KEY'] = os.environ.get("FLASK_KEY")
 ckeditor = CKEditor(app)                                        # 블로그 포스트 에디터인 CKEditor 객체 선언
-Bootstrap(app)                                                  # flask 웹의 Bootstrap 초기화 
+Bootstrap4(app)                                                  # flask 웹의 Bootstrap 초기화 
 
 ## --- DB 연결 ---
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")    # SQLALCHEMY DB URL 설정 
