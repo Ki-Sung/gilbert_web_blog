@@ -16,7 +16,7 @@ from functools import wraps
 load_dotenv(verbose=True)
 
 ## --- 웹 서버 정의 --
-app = Flask(__name__)                                           # flaks 객체 선언 
+app = Flask(__name__, instance_relative_config=True)              # flaks 객체 선언 - 애플리케이션을 인스턴스 상대적인 구성으로 설정하여 상대 경로에서 instance 폴더를 찾도록 함 
 # app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")              # 애플리케이션 비밀키 설정 - 비밀 키는 세션 및 CSRF(Cross-Site Request Forgery) 보호 및 Flask 기능을 보호하는데 사용
 app.config['SECRET_KEY'] = os.environ.get("FLASK_KEY")
 ckeditor = CKEditor(app)                                        # 블로그 포스트 에디터인 CKEditor 객체 선언
